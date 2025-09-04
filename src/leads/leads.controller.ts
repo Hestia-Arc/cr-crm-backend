@@ -1,7 +1,6 @@
 import { LeadsService } from './leads.service';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateLeadDto } from './dto/create-lead.dto';
-import { Lead } from './interfaces/lead.interface';
 
 @Controller('leads')
 export class LeadsController {
@@ -13,8 +12,8 @@ export class LeadsController {
   }
 
   @Get()
-  async findAll(): Promise<Lead[]> {
-    return this.leadsService.findAll();
+  findAll() {
+    this.leadsService.findAll();
   }
 
   @Get(':id')

@@ -1,4 +1,3 @@
-import { Property } from './interfaces/property.interface';
 import { PropertiesService } from './properties.service';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreatePropertiesDto } from './dto/create-property.dto';
@@ -13,8 +12,12 @@ export class PropertiesController {
   }
 
   @Get()
-  async findAll(): Promise<Property[]> {
-    return this.propertiesService.findAll();
+  findAll() {
+    try {
+      this.propertiesService.findAll();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @Get(':id')
