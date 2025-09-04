@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LeadsModule } from './leads/leads.module';
-import { PropertiesModule } from './properties/properties.module';
-import { TransactionService } from './transaction/transaction.service';
-import { TransactionController } from './transaction/transaction.controller';
-import { TransactionModule } from './transaction/transaction.module';
+import { LeadsModule } from './modules/leads/leads.module';
+import { PropertiesModule } from './modules/properties/properties.module';
+import { TransactionService } from './modules/transaction/transaction.service';
+import { TransactionController } from './modules/transaction/transaction.controller';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [LeadsModule, PropertiesModule, TransactionModule],
