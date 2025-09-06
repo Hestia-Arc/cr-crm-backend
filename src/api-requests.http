@@ -1,0 +1,9 @@
+# GET http://localhost:3000/leads/52477
+
+POST http://localhost:3000/auth/login
+content-type: application/json
+
+{
+    "username": "maria",
+    "password": "guess"
+}

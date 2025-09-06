@@ -17,7 +17,7 @@ export class LeadsController {
   }
 
   @Get(':id')
-  findOne(@Param() id: string): string {
+  findOne(@Param('id') id: string): string {
     return `This action returns a #${id} lead`;
   }
 }

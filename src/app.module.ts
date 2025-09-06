@@ -6,9 +6,19 @@ import { PropertiesModule } from './modules/properties/properties.module';
 import { TransactionService } from './modules/transaction/transaction.service';
 import { TransactionController } from './modules/transaction/transaction.controller';
 import { TransactionModule } from './modules/transaction/transaction.module';
+import { AuthModule } from './core/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [LeadsModule, PropertiesModule, TransactionModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    LeadsModule,
+    PropertiesModule,
+    TransactionModule,
+    AuthModule,
+  ],
   controllers: [AppController, TransactionController],
   providers: [AppService, TransactionService],
 })
