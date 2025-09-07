@@ -1,5 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from './../../modules/user/users.service';
+import { UsersService } from '../../features/user/users.service';
 import {
   BadRequestException,
   Injectable,
