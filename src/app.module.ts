@@ -8,6 +8,8 @@ import { TransactionController } from './modules/transaction/transaction.control
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { AuthModule } from './core/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from './prisma/prisma.module';
+import { UsersModule } from './modules/user/users.module';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { ConfigModule } from '@nestjs/config';
     LeadsModule,
     PropertiesModule,
     TransactionModule,
+    UsersModule,
     AuthModule,
+    PrismaModule,
   ],
   controllers: [AppController, TransactionController],
   providers: [AppService, TransactionService],

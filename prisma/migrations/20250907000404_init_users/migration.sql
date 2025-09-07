@@ -1,0 +1,12 @@
+/*
+  Warnings:
+
+  - You are about to drop the column `name` on the `User` table. All the data in the column will be lost.
+
+*/
+-- AlterTable
+ALTER TABLE "public"."User" DROP COLUMN "name",
+ADD COLUMN     "firstname" TEXT,
+ADD COLUMN     "lastname" TEXT,
+ADD COLUMN     "password" TEXT,
+ADD COLUMN     "username" TEXT;

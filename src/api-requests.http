@@ -1,9 +1,12 @@
 # GET http://localhost:3000/leads/52477
 
-POST http://localhost:3000/auth/login
+POST http://localhost:3000/auth/register
 content-type: application/json
 
 {
-    "username": "maria",
-    "password": "guess"
+  "email": "starafolab@gmail.com",
+  "firstname": "Hestia",
+  "lastname": "Arch",
+  "username": "HestiaD",
+  "password": "122m"
 }
