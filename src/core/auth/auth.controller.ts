@@ -12,12 +12,8 @@ export class AuthController {
     return this.authService.register(userInfo);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
   login(@Body() SignInDto: SignInDto) {
-    return this.authService.authenticate(
-      SignInDto.username,
-      SignInDto.password,
-    );
+    return this.authService.authenticate(SignInDto.email, SignInDto.password);
   }
 }

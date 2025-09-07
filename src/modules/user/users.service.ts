@@ -10,13 +10,17 @@ export class UsersService {
     return this.prisma.user.create({ data });
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    return await this.prisma.user.find((user) => user.email === email);
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { email: email },
+    });
+
+    return user;
   }
 
-  findOne(username: string): Promise<User | undefined> {
-    return this.prisma.user.find((user) => user.username === username);
-  }
+  // findOne(username: string): Promise<User | undefined> {
+  //   return this.prisma.user.findFirst((user) => user.email === username);
+  // }
 
   update() {
     return 'create';

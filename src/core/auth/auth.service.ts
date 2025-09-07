@@ -17,11 +17,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async authenticate(username: string, password: string): Promise<AccessToken> {
-    const user = await this.userService.findByEmail(username);
+  async authenticate(email: string, password: string): Promise<AccessToken> {
+    const user = await this.userService.findByEmail(email);
 
-    if (user?.password !== password) {
-      throw new UnauthorizedException();
+    if (!user) {
+      throw new BadRequestException("User doesn't exist");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      throw new BadRequestException('Invalid credentials');
     }
 
     const payload = {
