@@ -1,5 +1,5 @@
 export type AccessToken = {
   access_token: string;
-  userId: number | undefined;
+  userId: string | undefined;
   username: string | null;
 };

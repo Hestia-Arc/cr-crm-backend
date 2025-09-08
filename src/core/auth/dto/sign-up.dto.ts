@@ -1,8 +1,13 @@
+import { IsEmail, IsNotEmpty } from 'class-validator';
+
 export class SignUpDto {
-  id?: number;
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
-  firstname: string | null;
-  lastname: string | null;
-  username: string | null;
+
+  @IsNotEmpty()
+  name: string | null;
+
+  @IsNotEmpty()
   password: string | null | undefined;
 }

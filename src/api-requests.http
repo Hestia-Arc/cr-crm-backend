@@ -1,23 +1,31 @@
-# GET http://localhost:3000/leads/52477
-
+# ------------ REGISTER
 # Register user
 # POST http://localhost:3000/auth/register
 # content-type: application/json
 
 # {
 #   "email": "starafolab@gmail.com",
-#   "firstname": "Hestia",
-#   "lastname": "Arch",
-#   "username": "HestiaD",
+#   "name": "Hestia",
 #   "password": "122m"
 # }
 
 
 # Login user
-POST http://localhost:3000/auth/login
+# POST http://localhost:3000/auth/login
+# content-type: application/json
+
+# {
+#   "email": "starafolab@gmail.com",
+#   "password": "122m"
+# }
+
+# ---------------------- LEADS
+POST http://localhost:3000/leads
 content-type: application/json
 
 {
-  "email": "starafolab@gmail.com",
-  "password": "122m"
+  "name": "Donald",
+  "email": "macDonald@gmail.com",
+  "phone": "+2380444551789",
+  "userId": "cmfbfxlm30000syakmlfb9hd4"
 }

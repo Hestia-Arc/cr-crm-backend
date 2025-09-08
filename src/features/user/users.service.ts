@@ -1,26 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from 'generated/prisma';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from 'generated/prisma';
+import { RepositoryFactory } from 'src/common/repositories/repository.factory';
+import { SignUpDto } from 'src/core/auth/dto/sign-up.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  private userRepository: ReturnType<RepositoryFactory['createRepository']>;
+  constructor(private repositoryFactory: RepositoryFactory) {
+    this.userRepository = this.repositoryFactory.createRepository('user');
+  }
 
-  create(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({ data });
+  async create(data: SignUpDto): Promise<User | null> {
+    return (await this.userRepository.create(data)) as User | null;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
-      where: { email: email },
-    });
-
+    const user = (await this.userRepository.findByEmail(email)) as User | null;
     return user;
   }
-
-  // findOne(username: string): Promise<User | undefined> {
-  //   return this.prisma.user.findFirst((user) => user.email === username);
-  // }
 
   update() {
     return 'create';

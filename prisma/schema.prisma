@@ -14,19 +14,142 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  firstname  String?
-  lastname  String?
-  username  String?
-  password  String?
+model User { 
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  leads     Lead[]
+  transactions Transaction[]
+  campaigns Campaign[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  authorId  Int?
+model Lead {
+  id          String      @id @default(cuid())
+  name        String
+  email       String      @unique
+  phone       String?
+  budget      Float?
+  preferences String?     
+  score       Int?        
+  status      LeadStatus  @default(NEW)
+  activities  Activity[]
+  campaigns   Campaign[]
+  transactions Transaction[]
+  notes       Note[]
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  properties  PropertyMatch[] 
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
+
+enum LeadStatus {
+  NEW
+  QUALIFIED
+  IN_NEGOTIATION
+  CLOSED
+  LOST
+}
+
+model Property {
+  id          String          @id @default(cuid())
+  address     String
+  price       Float
+  beds        Int
+  baths       Int
+  description String?
+  matches     PropertyMatch[]
+  createdAt   DateTime        @default(now())
+}
+
+model PropertyMatch { 
+  id        String @id @default(cuid())
+  leadId    String
+  propertyId String
+  matchScore Float 
+  lead      Lead    @relation(fields: [leadId], references: [id])
+  property  Property @relation(fields: [propertyId], references: [id])
+}
+
+model Transaction {
+  id          String     @id @default(cuid())
+  leadId      String
+  status      TxStatus   @default(PENDING)
+  price       Float?
+  closingDate DateTime?
+  documents   Document[]
+  checklists  ChecklistItem[]
+  lead        Lead       @relation(fields: [leadId], references: [id])
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum TxStatus {
+  PENDING
+  UNDER_CONTRACT
+  CLOSED
+}
+
+model Document {
+  id           String     @id @default(cuid())
+  fileUrl      String
+  type         DocType
+  transactionId String
+  transaction  Transaction @relation(fields: [transactionId], references: [id])
+  createdAt    DateTime   @default(now())
+}
+
+enum DocType {
+  CONTRACT
+  DISCLOSURE
+  OFFER
+}
+
+model ChecklistItem {
+  id           String     @id @default(cuid())
+  description  String
+  isCompleted  Boolean    @default(false)
+  transactionId String
+  transaction  Transaction @relation(fields: [transactionId], references: [id])
+}
+
+model Activity { 
+  id      String @id @default(cuid())
+  type    ActivityType
+  content String
+  leadId  String
+  lead    Lead   @relation(fields: [leadId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+enum ActivityType {
+  EMAIL
+  CALL
+  TEXT
+  NOTE
+}
+
+model Note {
+  id     String @id @default(cuid())
+  content String
+  leadId String
+  lead   Lead  @relation(fields: [leadId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Campaign {
+  id        String   @id @default(cuid())
+  name      String
+  triggers  String   
+  actions   String   
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  leads     Lead[]
+  createdAt DateTime @default(now())
+}
+
